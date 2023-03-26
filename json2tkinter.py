@@ -3,11 +3,12 @@
 from pathlib import Path
 from PIL import Image, ImageTk
 
-import tkinter as tk
-from tkinter import colorchooser
+from tkinter import *
+from tkinter import ttk
+import json
 
 class App:
-    def __init__(self, master=tk.Tk()):
+    def __init__(self, master=Tk()):
         self.master = master
         master.resizable(False, False)
 
@@ -54,12 +55,15 @@ class App:
         example = file.read()
         file.close()
         self.json_field = json.loads(example)
-        
+        self.create_json_widget()
+
+    def button_creation(self,widget_counter):
+        Button(self.second_frame ,text=f"Button {widget_counter}")
 
     def create_json_widget(self):
-        list_range=len(json_field)
-        key_json_field=list(json_field.keys())
-        value_json_field=list(json_field.values())
+        list_range=len(self.json_field)
+        key_json_field=list(self.json_field.keys())
+        value_json_field=list(self.json_field.values())
         print(list_range)
         print(key_json_field)
         self.widget_list=[]
@@ -70,6 +74,7 @@ class App:
             "Label":"""Label(self.second_frame, text="Label Hello from Json", font=("Helvetica", 14))"""
         }
 
+        count=0
         for widget_counter in range(list_range):
             # create lebal with key name
             b=Label(self.second_frame, text=key_json_field[widget_counter], font=("Helvetica", 14)) 
