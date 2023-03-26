@@ -58,7 +58,13 @@ class App:
         self.create_json_widget()
 
     def button_creation(self,widget_counter):
-        Button(self.second_frame ,text=f"Button {widget_counter}")
+        return Button(self.second_frame ,text=f"Button {widget_counter}")
+
+    def label_creation(self,widget_counter):
+        return Label(self.second_frame, text="Label Hello from Json", font=("Helvetica", 14))
+
+    def entery_creation(self,widget_counter):
+        return Entry(self.second_frame)
 
     def create_json_widget(self):
         list_range=len(self.json_field)
@@ -69,9 +75,9 @@ class App:
         self.widget_list=[]
 
         dict_widget ={
-            "Entry":"Entry(self.second_frame)",
-            "Button":"""Button(self.second_frame ,text=f"Button {widget_counter}")""",
-            "Label":"""Label(self.second_frame, text="Label Hello from Json", font=("Helvetica", 14))"""
+            "Entry":self.entery_creation,
+            "Button":self.button_creation,
+            "Label": self.label_creation
         }
 
         count=0
@@ -82,8 +88,7 @@ class App:
             self.widget_list.append(b)
 
             # create widget based on value name
-            my_code =  dict_widget[value_json_field[widget_counter]]
-            b = eval(my_code)
+            b = dict_widget[value_json_field[widget_counter]](widget_counter)
             b.grid(row=count+1,column=0,pady=10,padx=220,ipadx=100,ipady=20)
             count=count+2
             self.widget_list.append(b)
